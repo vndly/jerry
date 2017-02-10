@@ -19,7 +19,7 @@ public class Main
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
-        Server jettyServer = new Server(8080);
+        Server jettyServer = new Server(80);
         jettyServer.setHandler(context);
 
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
