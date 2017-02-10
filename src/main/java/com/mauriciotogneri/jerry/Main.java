@@ -19,10 +19,9 @@ public class Main
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
-        System.out.println(System.getenv("PORT"));
-
         Server jettyServer = new Server(Integer.parseInt(System.getenv("PORT")));
         jettyServer.setHandler(context);
+        jettyServer.setErrorHandler(new CustomErrorHandler());
 
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
         jerseyServlet.setInitParameter(ServerProperties.PROVIDER_PACKAGES, getClass().getPackage().getName());

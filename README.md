@@ -14,3 +14,8 @@ Deploy in Heroku:
 ```sh
 git push heroku master
 ```
+
+See the logs:
+```sh
+heroku logs --tail
+```
