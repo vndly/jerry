@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry;
+package com.mauriciotogneri.jerry.kernel;
 
 public class Header
 {

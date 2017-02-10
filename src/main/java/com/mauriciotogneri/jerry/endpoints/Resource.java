@@ -1,7 +1,7 @@
 package com.mauriciotogneri.jerry.endpoints;
 
-import com.mauriciotogneri.jerry.EndPoint;
-import com.mauriciotogneri.jerry.Header;
+import com.mauriciotogneri.jerry.kernel.EndPoint;
+import com.mauriciotogneri.jerry.kernel.Header;
 import com.mauriciotogneri.jerry.model.Person;
 import com.mauriciotogneri.jerry.model.Token;
 
@@ -26,7 +26,7 @@ public class Resource extends EndPoint
     @Consumes(MediaType.APPLICATION_JSON)
     public Response helloWorld(@PathParam("id") Integer id,
                                @QueryParam("limit") Integer limit,
-                               @HeaderParam("user-agent") String userAgent,
+                               @HeaderParam("User-Agent") String userAgent,
                                String body)
     {
         Token token = json(Token.class, body);
