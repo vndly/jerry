@@ -8,25 +8,28 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-public class Main
+public class Jerry
 {
     public static void main(String[] args) throws Exception
     {
-        Main main = new Main();
-        main.start();
+        int port = Integer.parseInt(System.getenv("PORT"));
+        String packages = Jerry.class.getPackage().getName();
+
+        Jerry jerry = new Jerry();
+        jerry.start(port, packages);
     }
 
-    private void start() throws Exception
+    private void start(int port, String packages) throws Exception
     {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
-        Server jettyServer = new Server(Integer.parseInt(System.getenv("PORT")));
+        Server jettyServer = new Server(port);
         jettyServer.setHandler(context);
         jettyServer.setErrorHandler(new CustomErrorHandler());
 
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
-        jerseyServlet.setInitParameter(ServerProperties.PROVIDER_PACKAGES, getClass().getPackage().getName());
+        jerseyServlet.setInitParameter(ServerProperties.PROVIDER_PACKAGES, packages);
 
         try
         {

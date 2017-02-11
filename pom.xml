@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mauriciotogneri.jerry</groupId>
+    <groupId>com.mauriciotogneri</groupId>
     <artifactId>jerry</artifactId>
     <version>1.0.0</version>
     <name>Jerry</name>
@@ -20,7 +20,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.mauriciotogneri.jerry.Main</mainClass>
+                            <mainClass>com.mauriciotogneri.jerry.Jerry</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
