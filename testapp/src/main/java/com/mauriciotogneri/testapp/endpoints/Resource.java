@@ -1,9 +1,9 @@
-package com.mauriciotogneri.jerry.endpoints;
+package com.mauriciotogneri.testapp.endpoints;
 
-import com.mauriciotogneri.jerry.kernel.EndPoint;
-import com.mauriciotogneri.jerry.kernel.Header;
-import com.mauriciotogneri.jerry.model.Person;
-import com.mauriciotogneri.jerry.model.Token;
+import com.mauriciotogneri.jerry.EndPoint;
+import com.mauriciotogneri.jerry.Header;
+import com.mauriciotogneri.testapp.model.Person;
+import com.mauriciotogneri.testapp.model.Token;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;

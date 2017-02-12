@@ -1,7 +1,5 @@
 package com.mauriciotogneri.jerry;
 
-import com.mauriciotogneri.jerry.kernel.CustomErrorHandler;
-
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.server.Server;
@@ -18,16 +16,7 @@ import java.util.TimeZone;
 
 public class Jerry
 {
-    public static void main(String[] args) throws Exception
-    {
-        int port = Integer.parseInt(System.getenv("PORT"));
-        String packages = Jerry.class.getPackage().getName();
-
-        Jerry jerry = new Jerry();
-        jerry.start(port, packages);
-    }
-
-    private void start(int port, String packages) throws Exception
+    public final void start(int port, String packages) throws Exception
     {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -59,7 +48,7 @@ public class Jerry
         System.out.println(String.format("<<< %s%n", dateFormat.format(new Date(request.getTimeStamp()))));
 
         logRequest(request);
-        logResponse(response);
+        logResponse(request, response);
     }
 
     private void logRequest(Request request)
@@ -78,9 +67,9 @@ public class Jerry
         System.out.println();
     }
 
-    private void logResponse(Response response)
+    private void logResponse(Request request, Response response)
     {
-        System.out.println(String.format("%s %s", response.getStatus(), response.getReason()));
+        System.out.println(String.format("%s %s %s", request.getHttpVersion().toString(), response.getStatus(), response.getReason()));
 
         for (String headerName : response.getHeaderNames())
         {

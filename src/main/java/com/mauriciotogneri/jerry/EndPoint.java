@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry.kernel;
+package com.mauriciotogneri.jerry;
 
 import com.google.gson.Gson;
 

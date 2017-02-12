@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry.kernel;
+package com.mauriciotogneri.jerry;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.ErrorHandler;

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry.model;
+package com.mauriciotogneri.testapp.model;
 
 public class Person
 {
