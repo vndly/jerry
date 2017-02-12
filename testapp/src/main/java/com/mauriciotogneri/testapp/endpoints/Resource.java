@@ -4,6 +4,8 @@ import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.Header;
 import com.mauriciotogneri.testapp.model.Person;
 
+import java.util.UUID;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,7 +28,7 @@ import static javax.ws.rs.core.Response.Status.OK;
 public class Resource extends EndPoint
 {
     @POST
-    @Path("post")
+    @Path("person")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(Person person)
@@ -42,29 +44,41 @@ public class Resource extends EndPoint
     }
 
     @GET
-    @Path("get/{id}")
+    @Path("person/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id") Long id,
-                        @QueryParam("limit") Integer limit,
-                        @HeaderParam("token") String token)
+    public Response get(@PathParam("id") Long id)
     {
         Person person = new Person(id, "Bob", 35);
 
         return response(OK, person);
     }
 
+    @GET
+    @Path("person")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll(@QueryParam("limit") Integer limit,
+                           @HeaderParam("token") String token)
+    {
+        Person[] persons = new Person[3];
+        persons[0] = new Person(1L, "Bob", 35);
+        persons[1] = new Person(2L, "Alice", 28);
+        persons[2] = new Person(3L, "John", 44);
+
+        return response(OK, persons);
+    }
+
     @PUT
-    @Path("put/{id}")
+    @Path("person/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response put(@PathParam("id") Long id,
                         Person person)
     {
-        return response(OK, person, new Header("Token", "1234567890"));
+        return response(OK, person, new Header("token", UUID.randomUUID().toString()));
     }
 
     @DELETE
-    @Path("post/{id}")
+    @Path("person/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") Long id)
     {

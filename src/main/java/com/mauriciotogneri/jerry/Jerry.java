@@ -45,7 +45,7 @@ public class Jerry
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        System.out.println(String.format("<<< %s%n", dateFormat.format(new Date(request.getTimeStamp()))));
+        log("<<< %s%n%n", dateFormat.format(new Date(request.getTimeStamp())));
 
         logRequest(request);
         logResponse(request, response);
@@ -53,7 +53,7 @@ public class Jerry
 
     private void logRequest(Request request)
     {
-        System.out.println(String.format("%s %s %s", request.getMethod(), request.getOriginalURI(), request.getHttpVersion().toString()));
+        log("%s %s %s%n", request.getMethod(), request.getOriginalURI(), request.getHttpVersion().toString());
 
         Enumeration<String> headerNames = request.getHeaderNames();
 
@@ -61,21 +61,26 @@ public class Jerry
         {
             String headerName = headerNames.nextElement();
 
-            System.out.println(String.format("%s: %s", headerName, request.getHeader(headerName)));
+            log("%s: %s%n", headerName, request.getHeader(headerName));
         }
 
-        System.out.println();
+        log("%n");
     }
 
     private void logResponse(Request request, Response response)
     {
-        System.out.println(String.format("%s %s %s", request.getHttpVersion().toString(), response.getStatus(), response.getReason()));
+        log("%s %s %s%n", request.getHttpVersion().toString(), response.getStatus(), response.getReason());
 
         for (String headerName : response.getHeaderNames())
         {
-            System.out.println(String.format("%s: %s", headerName, response.getHeader(headerName)));
+            log("%s: %s%n", headerName, response.getHeader(headerName));
         }
 
-        System.out.println();
+        log("%n");
+    }
+
+    private void log(String string, Object... arguments)
+    {
+        System.out.print(String.format(string, arguments));
     }
 }

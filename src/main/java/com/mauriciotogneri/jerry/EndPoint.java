@@ -8,13 +8,15 @@ import javax.ws.rs.core.Response.Status;
 
 public class EndPoint
 {
+    private static final Gson gson = new Gson();
+
     protected Response response(Status status, Object entity, Header... headers)
     {
         ResponseBuilder builder = Response.status(status);
 
         if (entity != null)
         {
-            builder = builder.entity(json(entity));
+            builder = builder.entity(gson.toJson(entity));
         }
 
         for (Header header : headers)
@@ -28,15 +30,5 @@ public class EndPoint
     protected Response response(Status status, Header... headers)
     {
         return response(status, null, headers);
-    }
-
-    protected String json(Object object)
-    {
-        return new Gson().toJson(object);
-    }
-
-    protected <T> T json(Class<T> clazz, String json)
-    {
-        return new Gson().fromJson(json, clazz);
     }
 }
