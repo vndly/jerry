@@ -1,5 +1,0 @@
-{
-    "name": "Jerry",
-    "description": "A sample app using Jetty and Jersey",
-    "image": "heroku/java"
-}
