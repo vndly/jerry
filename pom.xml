@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.mauriciotogneri</groupId>
+    <groupId>com.mauriciotogneri</groupId>
     <artifactId>jerry</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
     <name>Jerry</name>
     <packaging>jar</packaging>
     <url>https://github.com/mauriciotogneri/jerry</url>
@@ -31,6 +32,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.0.1</version>
                 <executions>
@@ -51,24 +57,31 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/mauriciotogneri/maven/jerry/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.0.v20161208</version>
+            <version>9.4.5.v20170502</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
-            <version>9.4.0.v20161208</version>
+            <version>9.4.5.v20170502</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>9.4.0.v20161208</version>
+            <version>9.4.5.v20170502</version>
         </dependency>
 
         <dependency>

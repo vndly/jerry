@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mauriciotogneri/jerry/blob/master/LICENSE.md)
+[![Download](https://api.bintray.com/packages/mauriciotogneri/maven/jerry/images/download.svg)](https://bintray.com/mauriciotogneri/maven/jerry/_latestVersion)
+
 # Jerry
 
 ## Example
@@ -83,8 +86,8 @@ Add the following code to your **pom.xml**:
 ```xml
 <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+        <id>jcenter</id>
+        <url>https://jcenter.bintray.com</url>
     </repository>
 </repositories>
 ```
@@ -93,8 +96,17 @@ and the dependency:
 
 ```xml
 <dependency>
-    <groupId>com.github.mauriciotogneri</groupId>
+    <groupId>com.mauriciotogneri</groupId>
     <artifactId>jerry</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
 </dependency>
+```
+
+or if you use Gradle:
+
+```groovy
+dependencies
+{
+    compile 'com.mauriciotogneri:jerry:1.1.0'
+}
 ```
