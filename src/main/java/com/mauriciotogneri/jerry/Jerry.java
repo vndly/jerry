@@ -40,14 +40,17 @@ public class Jerry
         }
     }
 
-    protected void onLog(Request request, Response response)
+    private void onLog(Request request, Response response)
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        log("<<< %s%n%n", dateFormat.format(new Date(request.getTimeStamp())));
+        log("<<< %s%n%n", dateFormat.format(new Date()));
 
         logRequest(request);
+
+        log(">>> %s%n%n", dateFormat.format(new Date()));
+
         logResponse(request, response);
     }
 

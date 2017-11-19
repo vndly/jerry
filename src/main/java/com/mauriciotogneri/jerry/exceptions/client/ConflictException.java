@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry.exceptions;
+package com.mauriciotogneri.jerry.exceptions.client;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
