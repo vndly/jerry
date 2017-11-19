@@ -9,4 +9,19 @@ public class ConflictException extends WebApplicationException
     {
         super(Status.CONFLICT);
     }
+
+    public ConflictException(String message)
+    {
+        super(message, Status.CONFLICT);
+    }
+
+    public ConflictException(Throwable throwable)
+    {
+        super(throwable, Status.CONFLICT);
+    }
+
+    public ConflictException(String message, Throwable throwable)
+    {
+        super(message, throwable, Status.CONFLICT);
+    }
 }

@@ -82,5 +82,6 @@ public class Jerry
     private void log(String string, Object... arguments)
     {
         System.out.print(String.format(string, arguments));
+        System.out.flush();
     }
 }

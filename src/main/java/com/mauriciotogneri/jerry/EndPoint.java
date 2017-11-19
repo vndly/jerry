@@ -31,4 +31,9 @@ public class EndPoint
     {
         return response(status, null, headers);
     }
+
+    protected Response response(Status status)
+    {
+        return response(status, null, new Header[0]);
+    }
 }
