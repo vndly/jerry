@@ -5,23 +5,25 @@ import javax.ws.rs.core.Response.Status;
 
 public class ConflictException extends WebApplicationException
 {
+    private static final Status STATUS = Status.CONFLICT;
+
     public ConflictException()
     {
-        super(Status.CONFLICT);
+        super(STATUS);
     }
 
     public ConflictException(String message)
     {
-        super(message, Status.CONFLICT);
+        super(message, STATUS);
     }
 
     public ConflictException(Throwable throwable)
     {
-        super(throwable, Status.CONFLICT);
+        super(throwable, STATUS);
     }
 
     public ConflictException(String message, Throwable throwable)
     {
-        super(message, throwable, Status.CONFLICT);
+        super(message, throwable, STATUS);
     }
 }
