@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry;
+package com.mauriciotogneri.jerry.controller;
 
 import com.google.gson.Gson;
 
@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-public class EndPoint
+public class Controller
 {
     private static final Gson gson = new Gson();
 

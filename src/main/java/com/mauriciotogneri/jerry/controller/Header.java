@@ -1,4 +1,4 @@
-package com.mauriciotogneri.jerry;
+package com.mauriciotogneri.jerry.controller;
 
 public class Header
 {

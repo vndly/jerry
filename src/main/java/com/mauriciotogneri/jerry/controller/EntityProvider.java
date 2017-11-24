@@ -1,7 +1,7 @@
-package com.mauriciotogneri.jerry;
+package com.mauriciotogneri.jerry.controller;
 
 import com.google.gson.Gson;
-import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
+import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 
 import java.io.BufferedReader;
