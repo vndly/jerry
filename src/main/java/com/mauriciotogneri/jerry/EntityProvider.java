@@ -1,6 +1,8 @@
 package com.mauriciotogneri.jerry;
 
 import com.google.gson.Gson;
+import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
+import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 
-public class EntityProvider<T> implements MessageBodyReader<T>
+public class EntityProvider<T extends EntityObject> implements MessageBodyReader<T>
 {
     private final Class<T> entityClass;
 
@@ -38,11 +40,23 @@ public class EntityProvider<T> implements MessageBodyReader<T>
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            return gson.fromJson(reader, entityClass);
+            T entity = gson.fromJson(reader, entityClass);
+
+            if (!entity.isValid())
+            {
+                throw new BadRequestException();
+            }
+
+            return entity;
         }
         catch (Exception e)
         {
-            return null;
+            throw new BadRequestException(e);
         }
+    }
+
+    public interface EntityObject
+    {
+        boolean isValid();
     }
 }
