@@ -39,7 +39,7 @@ public class ResponseLogger
                 builder.append(String.format("%n"));
             }
 
-            if ((response.getLength() > 0) && response.hasEntity())
+            if (response.hasEntity())
             {
                 if (response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE))
                 {
