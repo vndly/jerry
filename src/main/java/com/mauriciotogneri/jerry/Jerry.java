@@ -1,8 +1,10 @@
 package com.mauriciotogneri.jerry;
 
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ServerProperties;
@@ -16,28 +18,49 @@ import java.util.TimeZone;
 
 public class Jerry
 {
-    public final void start(int port, String packages) throws Exception
+    public enum Mode
     {
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        REMOTE,
+        LOCAL
+    }
+
+    public final void start(int port, Mode mode, String packages) throws Exception
+    {
+        ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
 
-        Server jettyServer = new Server(port);
-        jettyServer.setHandler(context);
-        jettyServer.setErrorHandler(new CustomErrorHandler());
-        jettyServer.setRequestLog(this::onLog);
+        Server server = new Server();
+
+        ServerConnector connector = new ServerConnector(server);
+        connector.setPort(port);
+
+        if (mode == Mode.LOCAL)
+        {
+            connector.setHost("localhost");
+        }
+
+        server.setConnectors(new Connector[] {connector});
+        server.setHandler(context);
+        server.setErrorHandler(new CustomErrorHandler());
+        server.setRequestLog(this::onLog);
 
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
         jerseyServlet.setInitParameter(ServerProperties.PROVIDER_PACKAGES, packages);
 
         try
         {
-            jettyServer.start();
-            jettyServer.join();
+            server.start();
+            server.join();
         }
         finally
         {
-            jettyServer.destroy();
+            server.destroy();
         }
+    }
+
+    public final void start(int port, Mode mode, Package packages) throws Exception
+    {
+        start(port, mode, packages.getName());
     }
 
     private void onLog(Request request, Response response)
