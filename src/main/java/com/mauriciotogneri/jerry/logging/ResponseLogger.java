@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.core.MediaType;
@@ -31,7 +32,7 @@ public class ResponseLogger
                 builder.append(String.format(
                         "%n%s: %s",
                         entry.getKey(),
-                        String.join(", ", entry.getValue().toString())));
+                        String.join(", ", entry.getValue().stream().map(Object::toString).collect(Collectors.toList()))));
             }
 
             if (!response.getHeaders().isEmpty())
