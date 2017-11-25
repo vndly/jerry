@@ -17,7 +17,7 @@ public class Jerry
         LOCAL
     }
 
-    public void start(int port, Mode mode, String packages) throws Exception
+    public Server create(int port, Mode mode, String packages) throws Exception
     {
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
@@ -39,20 +39,12 @@ public class Jerry
         ServletHolder servlet = context.addServlet(ServletContainer.class, "/*");
         servlet.setInitParameter(ServerProperties.PROVIDER_PACKAGES, packages);
 
-        try
-        {
-            server.start();
-            server.join();
-        }
-        finally
-        {
-            server.destroy();
-        }
+        return server;
     }
 
-    public void start(int port, Mode mode, Package packages) throws Exception
+    public Server create(int port, Mode mode, Package packages) throws Exception
     {
-        start(port, mode, packages.getName());
+        return create(port, mode, packages.getName());
     }
 
     protected ErrorHandler errorHandler()

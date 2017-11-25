@@ -6,12 +6,22 @@
 ## Example
 
 ```java
-public class Main extends Jerry
+public class Main
 {
     public static void main(String[] args) throws Exception
     {
-        Main main = new Main();
-        main.start(8080, "com.package.example");
+        Jerry jerry = new Jerry();
+        Server server = jerry.create(8080, Mode.LOCAL, "com.package.example");
+        
+        try
+        {
+            server.start();
+            server.join();
+        }
+        finally
+        {
+            server.destroy();
+        }
     }
 }
 ```
@@ -98,7 +108,7 @@ and the dependency:
 <dependency>
     <groupId>com.mauriciotogneri</groupId>
     <artifactId>jerry</artifactId>
-    <version>1.7.4</version>
+    <version>1.8.0</version>
 </dependency>
 ```
 
@@ -107,6 +117,6 @@ or if you use Gradle:
 ```groovy
 dependencies
 {
-    compile 'com.mauriciotogneri:jerry:1.7.4'
+    compile 'com.mauriciotogneri:jerry:1.8.0'
 }
 ```
