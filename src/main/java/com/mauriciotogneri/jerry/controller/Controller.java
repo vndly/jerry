@@ -1,6 +1,7 @@
 package com.mauriciotogneri.jerry.controller;
 
 import com.google.gson.Gson;
+import com.mauriciotogneri.jerry.http.Header;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;

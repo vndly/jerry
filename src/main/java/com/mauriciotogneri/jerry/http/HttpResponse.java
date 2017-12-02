@@ -4,12 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.core.MediaType;
 
@@ -17,7 +11,7 @@ public class HttpResponse
 {
     private final int status;
     private final String statusText;
-    private final Map<String, List<String>> headers;
+    private final Headers headers;
     private final String entity;
 
     private static final JsonParser parser = new JsonParser();
@@ -27,13 +21,7 @@ public class HttpResponse
     {
         this.status = response.getStatus();
         this.statusText = response.getStatusInfo().getReasonPhrase();
-
-        this.headers = new HashMap<>();
-
-        for (Entry<String, List<Object>> entry : response.getHeaders().entrySet())
-        {
-            this.headers.put(entry.getKey(), entry.getValue().stream().map(Object::toString).collect(Collectors.toList()));
-        }
+        this.headers = Headers.fromResponse(response.getHeaders());
 
         if (response.hasEntity())
         {
@@ -57,7 +45,7 @@ public class HttpResponse
         return status;
     }
 
-    public Map<String, List<String>> headers()
+    public Headers headers()
     {
         return headers;
     }
@@ -72,38 +60,24 @@ public class HttpResponse
     {
         StringBuilder builder = new StringBuilder();
 
-        try
+        builder.append(String.format(
+                "%s %s",
+                status,
+                statusText));
+
+        if (!headers.isEmpty())
         {
             builder.append(String.format(
-                    "%s %s%n",
-                    status,
-                    statusText));
-
-            for (Entry<String, List<String>> entry : headers.entrySet())
-            {
-                builder.append(String.format(
-                        "%n%s: %s",
-                        entry.getKey(),
-                        String.join(", ", entry.getValue())));
-            }
-
-            if (!headers.isEmpty())
-            {
-                builder.append(String.format("%n"));
-            }
-
-            if (!entity.isEmpty())
-            {
-                builder.append(String.format(
-                        "%n%s",
-                        entity));
-            }
-
-            builder.append(String.format("%n%n"));
+                    "%n%s",
+                    headers.toString()
+            ));
         }
-        catch (Exception e)
+
+        if (!entity.isEmpty())
         {
-            // ignore
+            builder.append(String.format(
+                    "%n%s",
+                    entity));
         }
 
         return builder.toString();

@@ -4,11 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.ws.rs.container.ContainerRequestContext;
 
@@ -16,29 +11,25 @@ public class HttpRequest
 {
     private final String method;
     private final String path;
-    private final Map<String, List<String>> headers;
-    private final byte[] entity;
+    private final Headers headers;
+    private final String entity;
 
     public HttpRequest(ContainerRequestContext request) throws IOException
     {
         this.method = request.getMethod();
         this.path = request.getUriInfo().getRequestUri().getPath();
-
-        this.headers = new HashMap<>();
-
-        for (Entry<String, List<String>> entry : request.getHeaders().entrySet())
-        {
-            this.headers.put(entry.getKey(), entry.getValue());
-        }
+        this.headers = Headers.fromRequest(request.getHeaders());
 
         if (request.hasEntity())
         {
-            this.entity = bytes(request.getEntityStream());
-            request.setEntityStream(new ByteArrayInputStream(this.entity));
+            byte[] bytes = bytes(request.getEntityStream());
+            request.setEntityStream(new ByteArrayInputStream(bytes));
+
+            this.entity = new String(bytes);
         }
         else
         {
-            this.entity = new byte[0];
+            this.entity = "";
         }
     }
 
@@ -52,12 +43,12 @@ public class HttpRequest
         return path;
     }
 
-    public Map<String, List<String>> headers()
+    public Headers headers()
     {
         return headers;
     }
 
-    public byte[] entity()
+    public String entity()
     {
         return entity;
     }
@@ -82,38 +73,24 @@ public class HttpRequest
     {
         StringBuilder builder = new StringBuilder();
 
-        try
+        builder.append(String.format(
+                "%s %s",
+                method,
+                path));
+
+        if (!headers.isEmpty())
         {
             builder.append(String.format(
-                    "%s %s%n",
-                    method,
-                    path));
-
-            for (Entry<String, List<String>> entry : headers.entrySet())
-            {
-                builder.append(String.format(
-                        "%n%s: %s",
-                        entry.getKey(),
-                        String.join(", ", entry.getValue())));
-            }
-
-            if (!headers.isEmpty())
-            {
-                builder.append(String.format("%n"));
-            }
-
-            if (entity.length > 0)
-            {
-                builder.append(String.format(
-                        "%n%s",
-                        new String(entity, StandardCharsets.UTF_8.name())));
-            }
-
-            builder.append(String.format("%n%n"));
+                    "%n%s",
+                    headers.toString()
+            ));
         }
-        catch (Exception e)
+
+        if (!entity.isEmpty())
         {
-            // ignore
+            builder.append(String.format(
+                    "%n%s",
+                    entity));
         }
 
         return builder.toString();
