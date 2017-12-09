@@ -108,7 +108,7 @@ and the dependency:
 <dependency>
     <groupId>com.mauriciotogneri</groupId>
     <artifactId>jerry</artifactId>
-    <version>2.2.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 
@@ -117,6 +117,6 @@ or if you use Gradle:
 ```groovy
 dependencies
 {
-    compile 'com.mauriciotogneri:jerry:2.2.0'
+    compile 'com.mauriciotogneri:jerry:2.5.0'
 }
 ```

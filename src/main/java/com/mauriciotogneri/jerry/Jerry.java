@@ -1,15 +1,10 @@
 package com.mauriciotogneri.jerry;
 
-import com.mauriciotogneri.jerry.error.CustomErrorHandler;
+import com.mauriciotogneri.jerry.config.JerryConfig;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.eclipse.jetty.server.handler.ErrorHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Jerry
 {
@@ -22,21 +17,10 @@ public class Jerry
         connector.setHost(config.host());
 
         server.setConnectors(new Connector[] {connector});
-        server.setErrorHandler(errorHandler());
-
-        ServletHolder servlet = new ServletHolder(new ServletContainer(config.resourceConfig()));
-        ServletContextHandler context = new ServletContextHandler(server, "/*");
-        context.addServlet(servlet, "/*");
-
-        ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.setHandlers(config.handlers());
-        server.setHandler(contexts);
+        server.setErrorHandler(config.errorHandler());
+        server.setHandler(config.handlers());
+        server.addLifeCycleListener(config.lifeCycleListener());
 
         return server;
-    }
-
-    protected ErrorHandler errorHandler()
-    {
-        return new CustomErrorHandler();
     }
 }
