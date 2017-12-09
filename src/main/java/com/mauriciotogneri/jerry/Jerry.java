@@ -5,6 +5,7 @@ import com.mauriciotogneri.jerry.error.CustomErrorHandler;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -26,6 +27,10 @@ public class Jerry
         ServletHolder servlet = new ServletHolder(new ServletContainer(config.resourceConfig()));
         ServletContextHandler context = new ServletContextHandler(server, "/*");
         context.addServlet(servlet, "/*");
+
+        ContextHandlerCollection contexts = new ContextHandlerCollection();
+        contexts.setHandlers(config.handlers());
+        server.setHandler(contexts);
 
         return server;
     }
