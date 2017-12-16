@@ -2,6 +2,7 @@
 [![Download](https://api.bintray.com/packages/mauriciotogneri/maven/jerry/images/download.svg)](https://bintray.com/mauriciotogneri/maven/jerry/_latestVersion)
 
 # Jerry
+Jerry: Jetty + Jersey
 
 ## Example
 
