@@ -14,7 +14,7 @@ public class Main
         ServletContextHandler servletContext = new ServletContextHandler();
         servletContext.setContextPath("/");
         servletContext.addServlet(servlet, "/*");
-        HandlerList handlers = new HandlerList(contextHandler, servletContext);
+        HandlerList handlers = new HandlerList(servletContext);
         
         JerryConfig.Builder config = new JerryConfig.Builder();
         config.port(8080);
