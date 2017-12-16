@@ -10,8 +10,18 @@ public class Main
 {
     public static void main(String[] args) throws Exception
     {
+        ServletHolder servlet = new ServletHolder(new ServletContainer(new Application()));
+        ServletContextHandler servletContext = new ServletContextHandler();
+        servletContext.setContextPath("/");
+        servletContext.addServlet(servlet, "/*");
+        HandlerList handlers = new HandlerList(contextHandler, servletContext);
+        
+        JerryConfig.Builder config = new JerryConfig.Builder();
+        config.port(8080);
+        config.handlers(handlers);
+        
         Jerry jerry = new Jerry();
-        Server server = jerry.create(8080, Mode.LOCAL, "com.package.example");
+        Server server = jerry.create(config.build());
         
         try
         {
@@ -27,11 +37,22 @@ public class Main
 ```
 
 ```java
-@Path("/")
+@ApplicationPath("/")
+public class Application extends ResourceConfig
+{
+    public Application()
+    {
+        packages("com.example.foo");
+    }
+}
+```
+
+```java
+@Path("/v1")
 public class ProfileResource extends EndPoint
 {
     @GET
-    @Path("v1/profile")
+    @Path("profile")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfile()
     {
@@ -41,7 +62,7 @@ public class ProfileResource extends EndPoint
     }
 
     @PUT
-    @Path("v1/profile")
+    @Path("profile")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProfile(Profile newProfile)
